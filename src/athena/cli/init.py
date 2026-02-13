@@ -233,7 +233,7 @@ This is an Athena workspace. Key directories:
 
 
 def init_workspace(target_dir: Path = None, ide: str = None) -> bool:
-    """
+    \"\"\"
     Initialize an Athena workspace with the required directory structure.
 
     Args:
@@ -242,7 +242,7 @@ def init_workspace(target_dir: Path = None, ide: str = None) -> bool:
 
     Returns:
         True if successful, False otherwise.
-    """
+    \"\"\"
     root = target_dir or Path.cwd()
     root = Path(root).resolve()
 
@@ -252,14 +252,14 @@ def init_workspace(target_dir: Path = None, ide: str = None) -> bool:
         print(f"   IDE: {ide}")
     print("=" * 60)
 
-    # Define structure
+    # Define structure (Consolidated into .athena)
     directories = [
-        ".agent/workflows",
-        ".agent/scripts",
-        ".agent/skills/protocols",
-        ".framework/modules",
-        ".context/memories/session_logs",
-        ".context/data",
+        ".athena/agent/workflows",
+        ".athena/agent/scripts",
+        ".athena/agent/skills/protocols",
+        ".athena/framework/modules",
+        ".athena/session_logs",
+        ".athena/context/data",
     ]
 
     # Create directories
@@ -269,24 +269,19 @@ def init_workspace(target_dir: Path = None, ide: str = None) -> bool:
         full_path.mkdir(parents=True, exist_ok=True)
         print(f"   ✅ {dir_path}/")
 
-    # Create root marker (for path discovery)
-    marker_path = root / ".athena_root"
-    marker_path.write_text(f"# Athena Workspace\nCreated: {datetime.now().isoformat()}\n")
-    print("   ✅ .athena_root (workspace marker)")
-
     # Create template files
     today = datetime.now().strftime("%Y-%m-%d")
 
     templates = [
         (
-            ".framework/modules/Core_Identity.md",
+            ".athena/framework/modules/Core_Identity.md",
             CORE_IDENTITY_TEMPLATE.format(date=today),
         ),
-        (".agent/workflows/start.md", START_WORKFLOW_TEMPLATE),
-        (".agent/workflows/end.md", END_WORKFLOW_TEMPLATE),
-        (".agent/workflows/save.md", SAVE_WORKFLOW_TEMPLATE),
+        (".athena/agent/workflows/start.md", START_WORKFLOW_TEMPLATE),
+        (".athena/agent/workflows/end.md", END_WORKFLOW_TEMPLATE),
+        (".athena/agent/workflows/save.md", SAVE_WORKFLOW_TEMPLATE),
         (
-            ".context/project_state.md",
+            ".athena/context/project_state.md",
             PROJECT_STATE_TEMPLATE.format(date=today),
         ),
     ]
@@ -295,7 +290,7 @@ def init_workspace(target_dir: Path = None, ide: str = None) -> bool:
     for file_path, content in templates:
         full_path = root / file_path
         if not full_path.exists():
-            full_path.write_text(content)
+            full_path.write_text(content, encoding="utf-8")
             print(f"   ✅ {file_path}")
         else:
             print(f"   ⏭️  {file_path} (already exists)")

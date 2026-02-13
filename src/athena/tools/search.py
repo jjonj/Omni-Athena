@@ -21,6 +21,7 @@ from athena.core.config import (
     TAG_INDEX_AM_PATH,
     TAG_INDEX_NZ_PATH,
     CANONICAL_PATH,
+    AGENT_DIR,
 )
 from athena.core.models import SearchResult
 from athena.core.cache import get_search_cache
@@ -70,10 +71,10 @@ CONFIDENCE_MED = 0.02
 CONFIDENCE_LOW = 0.01
 
 # GraphRAG paths
-GRAPHRAG_DIR = PROJECT_ROOT / ".agent" / "graphrag"
+GRAPHRAG_DIR = AGENT_DIR / "graphrag"
 COMMUNITIES_FILE = GRAPHRAG_DIR / "communities.json"
 GRAPH_FILE = GRAPHRAG_DIR / "knowledge_graph.gpickle"
-CHROMA_DIR = PROJECT_ROOT / ".agent" / "chroma_db"
+CHROMA_DIR = AGENT_DIR / "chroma_db"
 
 # --- Collection Functions ---
 
